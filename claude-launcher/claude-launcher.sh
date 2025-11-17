@@ -19,7 +19,7 @@ while IFS= read -r file; do
     basename_file=$(basename "$file")
     profiles+=("${basename_file%.*}")
     profile_files+=("$file")
-done < <(find "$PROMPTS_DIR" \( -name "*.txt" -o -name "*.md" \) -type f | sort)
+done < <(find -L "$PROMPTS_DIR" \( -name "*.txt" -o -name "*.md" \) -type f | sort)
 
 # Check if any profiles exist
 if [ ${#profiles[@]} -eq 0 ]; then
