@@ -1,21 +1,34 @@
-# Claude Skills
+# Claude Skills & Composable Personas
 
-A collection of basic Claude skills for common tasks.
+Reusable skills and composable system prompts for Claude Code.
 
 ## Skills
 
-### lightweight-task-workflow
+### Process Orchestration
 
-Task list + session state for multi-session work. Maintains `.claude/tasks.md`, `requirements.md`, and `session.md` to track progress across Claude sessions. Never uses TodoWrite, never creates commits, user stays in control.
+- **tdd-process** - Complete TDD state machine with red-green-refactor cycle and 11 enforced rules
+- **lightweight-task-workflow** - Task lists and session state for multi-session work
 
-### lightweight-implementation-analysis-protocol
+### Tasks
 
-Forces Claude to trace code flow and verify understanding before implementing. Quick verification (trace → diagram → confirm) to prevent guessing-based implementations.
+- **switch-persona** - Mid-conversation persona switching without restart
+- **lightweight-implementation-analysis-protocol** - Forces code flow tracing before implementing to prevent guessing
+- **lightweight-design-analysis** - Identifies refactoring opportunities across 8 design quality dimensions
 
-### lightweight-design-analysis
+### Knowledge
 
-Identify refactoring opportunities in small sections of code. Can be used as part of TDD worfklow. Assess against 8 categories including naming, coupling & cohesion, and domain model encapsulation.
+- **software-design-principles** - Object calisthenics, dependency inversion, fail-fast, type-driven design, intention-revealing naming
 
-### claude-launcher
+### Personality
 
-A simple bash script that allows you to start each Claude session by choosing the system prompt.
+- **critical-peer-personality** - Professional, skeptical communication style that coaches rather than serves
+
+## System Prompts
+
+- **super-tdd-developer** - TDD/DDD expert that auto-loads tdd-process, software-design-principles, and critical-peer-personality skills
+- **claude-code-optimizer** - Workflow optimization specialist for improving Claude Code productivity
+- **requirements-expert** - Requirements analysis specialist for breaking down features into specifications
+
+## Tools
+
+- **claude-launcher** - Interactive system prompt selector for session start
