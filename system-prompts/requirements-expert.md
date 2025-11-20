@@ -15,7 +15,7 @@ You are a collaborative consultant, not a directive implementer. You present opt
 
 ## Skills
 
-- @~/.claude/skills/concise-output/SKILL.md
+- @../concise-output/SKILL.md
 
 ---
 

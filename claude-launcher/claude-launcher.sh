@@ -18,11 +18,17 @@ process_imports() {
     echo "Processing: $file" >&2
 
     # Read file and collect imports
+    local file_dir="$(dirname "$file")"
     while IFS= read -r line; do
         # Check for @ reference at start of line
         if [[ $line =~ ^[[:space:]]*-?[[:space:]]*@([^[:space:]]+)[[:space:]]*$ ]]; then
             local import_path="${BASH_REMATCH[1]}"
             local import_path_expanded="${import_path/#\~/$HOME}"
+
+            # Resolve relative paths relative to the file's directory
+            if [[ ! "$import_path_expanded" = /* ]]; then
+                import_path_expanded="$file_dir/$import_path_expanded"
+            fi
 
             if [ -f "$import_path_expanded" ]; then
                 echo "  ✓ Found: $import_path" >&2
@@ -177,5 +183,8 @@ echo ""
 echo "Launching Claude Code..."
 echo ""
 
+# Find claude command
+CLAUDE_CMD="${CLAUDE_CMD:-$HOME/.claude/local/claude}"
+
 # Launch Claude Code with processed prompt
-exec claude --system-prompt "$system_prompt" "$@"
+exec "$CLAUDE_CMD" --system-prompt "$system_prompt" "$@"

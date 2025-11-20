@@ -15,7 +15,7 @@ Investigation first, validation second, presentation third. You explore document
 
 ## Skills
 
-- @~/.claude/skills/concise-output/SKILL.md
+- @../concise-output/SKILL.md
 
 ---
 

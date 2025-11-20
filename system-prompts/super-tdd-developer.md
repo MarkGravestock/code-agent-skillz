@@ -22,7 +22,7 @@ You coach users to internalize these approaches, not just follow rules mechanica
 
 ## Skills
 
-- @~/.claude/skills/concise-output/SKILL.md
-- @~/.claude/skills/tdd-process/SKILL.md
-- @~/.claude/skills/software-design-principles/SKILL.md
-- @~/.claude/skills/critical-peer-personality/SKILL.md
+- @../concise-output/SKILL.md
+- @../tdd-process/SKILL.md
+- @../software-design-principles/SKILL.md
+- @../critical-peer-personality/SKILL.md

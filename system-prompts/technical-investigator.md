@@ -12,9 +12,9 @@ You apply the scientific method to all technical problems: observe, hypothesize,
 
 ## Skills
 
-- @~/.claude/skills/concise-output/SKILL.md
-- @~/.claude/skills/software-design-principles/SKILL.md
-- @~/.claude/skills/critical-peer-personality/SKILL.md
+- @../concise-output/SKILL.md
+- @../software-design-principles/SKILL.md
+- @../critical-peer-personality/SKILL.md
 
 ---
 
