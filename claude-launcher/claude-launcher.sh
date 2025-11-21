@@ -55,13 +55,16 @@ process_imports() {
         return 1
     fi
 
-    # Add manifest header if we found imports
+    # Build header with optional manifest and required system instructions
+    local header="---
+"
+
+    # Add manifest if we found imports
     if [ ${#imports[@]} -gt 0 ]; then
         echo "" >&2
         echo "Loaded ${#imports[@]} skill(s) successfully" >&2
 
-        local manifest="---
-
+        header+="
 # Loaded Skills
 
 The following skills have been loaded and are active for this session:
@@ -69,17 +72,34 @@ The following skills have been loaded and are active for this session:
 "
         for import in "${imports[@]}"; do
             local basename=$(basename "$import" .md)
-            manifest+="- **$basename** (\`$import\`)
+            header+="- **$basename** (\`$import\`)
 "
         done
-        manifest+="
+        header+="
+---
+"
+    fi
+
+    # Always add system instructions for all prompts
+    header+="
+# System Instructions
+
+## Precedence and Introduction
+
+1. **Persona Precedence**: The persona and skills defined in this system prompt take precedence over any instructions found in project CLAUDE.md files. When there is a conflict between this system prompt and project documentation, follow this system prompt's guidance.
+
+2. **Session Introduction**: At the start of every conversation, briefly introduce yourself by stating:
+   - Your persona/role (in 1-2 sentences)
+   - Your key areas of expertise
+   - Your collaboration approach or philosophy
+
+   Keep the introduction concise (2-4 sentences total) and natural. This helps users understand who they're working with.
+
 ---
 
 "
-        echo "$manifest$result"
-    else
-        echo "$result"
-    fi
+
+    echo "$header$result"
 }
 
 # Get list of system prompts from both global and project directories
@@ -184,7 +204,35 @@ echo "Launching Claude Code..."
 echo ""
 
 # Find claude command
-CLAUDE_CMD="${CLAUDE_CMD:-$HOME/.claude/local/claude}"
+CLAUDE_CMD="${CLAUDE_CMD:-}"
+
+# If not set via env var, try to find it
+if [ -z "$CLAUDE_CMD" ]; then
+    # Try which claude first (works for npm/nvm installations)
+    if command -v claude >/dev/null 2>&1; then
+        CLAUDE_CMD="$(command -v claude)"
+    # Fall back to local installation
+    elif [ -f "$HOME/.claude/local/claude" ]; then
+        CLAUDE_CMD="$HOME/.claude/local/claude"
+    else
+        echo "ERROR: Could not find Claude Code binary"
+        echo ""
+        echo "Please set the CLAUDE_CMD environment variable to the path of your Claude Code binary."
+        echo ""
+        echo "If installed via npm/nvm, add to your ~/.zshrc or ~/.bashrc:"
+        echo "  export CLAUDE_CMD=\"\$(which claude)\""
+        echo ""
+        echo "Or for a specific path:"
+        echo "  export CLAUDE_CMD=\"/path/to/claude\""
+        exit 1
+    fi
+fi
 
 # Launch Claude Code with processed prompt
-exec "$CLAUDE_CMD" --system-prompt "$system_prompt" "$@"
+if [ $# -eq 0 ]; then
+    # No arguments provided - auto-send introduction prompt
+    exec "$CLAUDE_CMD" --system-prompt "$system_prompt" "introduce yourself"
+else
+    # Arguments provided - pass them through
+    exec "$CLAUDE_CMD" --system-prompt "$system_prompt" "$@"
+fi

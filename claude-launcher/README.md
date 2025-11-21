@@ -8,6 +8,32 @@ Simple bash script that wraps the Claude Code `--system-prompt` option. Start yo
 
 No symlinks needed. I have the command aliased as `cl`.
 
+## Configuration
+
+### Claude Code Binary Location
+
+The launcher automatically detects your Claude Code binary in this order:
+
+1. `$CLAUDE_CMD` environment variable (if set)
+2. `which claude` (works for npm/nvm installations)
+3. `~/.claude/local/claude` (local installation)
+
+**For npm/nvm installations (recommended):**
+
+Add to your `~/.zshrc` or `~/.bashrc`:
+
+```bash
+export CLAUDE_CMD="$(which claude)"
+```
+
+**For custom installation paths:**
+
+```bash
+export CLAUDE_CMD="/path/to/your/claude"
+```
+
+If the launcher can't find Claude Code, it will display a helpful error message with setup instructions.
+
 ```bash
 ➜  code: cl
 Select a Claude Code system prompt:
