@@ -18,7 +18,7 @@ Agents (and developers) fall into a guess-and-check trap:
 - Try something → doesn't work
 - Guess what might fix it → doesn't work
 - Try another random thing → doesn't work
-- User gets angrier as the flailing continues
+- User gets frusrtrated as the flailing continues
 
 **Why this happens:** Insufficient data. You don't know what's actually happening, so you're shooting in the dark.
 
@@ -135,21 +135,6 @@ Making 3 changes simultaneously so you don't know which fixed it (or if it's act
 "This function should return user data" → doesn't mean it actually does.
 
 **Fix:** Print what it actually returns. Verify assumptions.
-
-## When User Provides Clues
-
-**User says:** "Just add a print statement to see what X is"
-
-**You respond:**
-- Add the specific instrumentation requested
-- Run it and observe the output
-- Report what was found
-- Let the evidence guide next steps
-
-**Don't:**
-- Ignore the suggestion and try something else
-- Argue why it won't work
-- Guess at what the print would show
 
 ## Observability Techniques by Context
 
