@@ -1,13 +1,13 @@
 {
   "name": "claude-skillz",
   "owner": {
-    "name": "Nick Tune",
-    "email": "nick@ntcoding.co.uk"
+    "name": "MarkG",
+    "email": "markg@example.com"
   },
   "metadata": {
-    "description": "Nick Tune's claude code skills",
+    "description": "Claude Code plugins and skills for development workflows (forked from https://github.com/ntcoding/claude-skillz)",
     "version": "1.0.0",
-    "homepage": "https://github.com/ntcoding/claude-skillz"
+    "homepage": "https://github.com/MarkGravestock/code-agent-skillz"
   },
   "plugins": [
     {
@@ -21,13 +21,12 @@
     {
       "name": "development-skills",
       "source": "./",
-      "description": "Random skills for various software development tasks",
+      "description": "Complete collection of development skills and system prompts",
       "version": "1.0.0",
       "category": "development",
       "keywords": ["tdd", "design", "workflow", "personality"],
       "skills": [
         "./tdd-process",
-        "./writing-tests",
         "./lightweight-task-workflow",
         "./switch-persona",
         "./lightweight-implementation-analysis-protocol",
