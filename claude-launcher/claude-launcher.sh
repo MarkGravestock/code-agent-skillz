@@ -194,7 +194,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Save debug output
+# Save to temporary file for passing to Claude Code
+TEMP_PROMPT_FILE=$(mktemp)
+trap "rm -f '$TEMP_PROMPT_FILE'" EXIT
+
+echo "$system_prompt" > "$TEMP_PROMPT_FILE"
+
+# Also save debug output
 echo "$system_prompt" > "$DEBUG_OUTPUT"
 echo ""
 echo "Debug: Processed system prompt saved to $DEBUG_OUTPUT"
@@ -228,11 +234,11 @@ if [ -z "$CLAUDE_CMD" ]; then
     fi
 fi
 
-# Launch Claude Code with processed prompt
+# Launch Claude Code with processed prompt from file
 if [ $# -eq 0 ]; then
     # No arguments provided - auto-send introduction prompt
-    exec "$CLAUDE_CMD" --system-prompt "$system_prompt" "introduce yourself"
+    exec "$CLAUDE_CMD" --system-prompt-file "$TEMP_PROMPT_FILE" "introduce yourself"
 else
     # Arguments provided - pass them through
-    exec "$CLAUDE_CMD" --system-prompt "$system_prompt" "$@"
+    exec "$CLAUDE_CMD" --system-prompt-file "$TEMP_PROMPT_FILE" "$@"
 fi
